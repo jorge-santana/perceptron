@@ -3,7 +3,12 @@ import numpy as np
 # Problema: Baseado em peso e altura, quero fazer a predição se é adulto ou criança
 
 class Perceptron:
-    def __init__(self):
+    def __init__(self, taxa_aprendizado = 0.1, epocas = 1000):
+        # taxa de aprendizado
+        # muito pequena < 0.5 (aprendizado mais lento, porém mais estável)
+        # muito alto > 1 (aprendizado mais rápido, porém pode alucinar)
+        self.taxa_aprendizado = taxa_aprendizado
+        self.epocas = epocas
         print("Instância da classe Perceptron > Objeto Perceptron")
 
     def treinar(self):
