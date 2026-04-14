@@ -1,0 +1,136 @@
+# ======================
+# Python
+# ======================
+
+# Bytecode e cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Distribuição e empacotamento
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+pip-wheel-metadata/
+MANIFEST
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+ENV/
+.env/
+virtualenv/
+
+# Instalação de pacotes
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Testes e cobertura
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+.pytest_cache/
+.cache/
+nosetests.xml
+test-results/
+
+# Tipagem
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Sphinx (documentação)
+docs/_build/
+docs/_autosummary/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.yaml
+secrets.yml
+secrets.json
+
+# Logs e bancos de dados locais
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# ======================
+# PyCharm / JetBrains
+# ======================
+
+# Configurações do projeto (geradas localmente)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# ======================
+# Sistema Operacional
+# ======================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ======================
+# Ferramentas diversas
+# ======================
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Profiling
+*.prof
+
+# Rope (refatoração)
+.ropeproject/
+
+# SageMath
+*.sage.py
+
+# Pyenv
+.python-version
