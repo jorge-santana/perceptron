@@ -1,16 +1,21 @@
-# This is a sample Python script.
+import numpy as np
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Problema: Baseado em peso e altura, quero fazer a predição se é adulto ou criança
 
+# Dados de entrada (inputs, features) - treinamento / predição
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# [peso (kg), altura (m)]
+entradas = np.array([
+    [15, 1.0], # criança
+    [25, 1.2], # criança
+    [65, 1.7], # adulto
+    [80, 1.8], # adulto
+])
 
+print("Dados de entrada: ", entradas)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# Rótulos (Labels): Treinamento supervisionado
+# 0 = criança; 1 = adulto
+rotulos = np.array([0, 0, 1, 1])
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print("Dados de validação (treinamento): ", rotulos)
