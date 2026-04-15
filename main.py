@@ -59,10 +59,13 @@ entradas = np.array([
     [25, 1.2], # criança
     [65, 1.7], # adulto
     [80, 1.8], # adulto
+    [50, 1.6], # ambíguo
+    [55, 1.6], # ambíguo
+    [55, 1.65], # ambíguo
 ])
 
 # 0 => criança, 1 => adulto
-rotulos = np.array([0, 0, 1, 1])
+rotulos = np.array([0, 0, 1, 1, 0, 0, 1])
 
 media = entradas.mean(axis=0) # medindo a média por coluna (peso e altura)
 desvio_padrao = entradas.std(axis=0) # desvio padrão calculado por colunas
