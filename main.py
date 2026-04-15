@@ -1,6 +1,6 @@
 import numpy as np
 
-def funcao_heavside(x):
+def funcao_heaviside(x):
     return np.where(x >= 0, 1, 0)
 
 class Perceptron:
@@ -25,7 +25,7 @@ class Perceptron:
                 # (-1.15686203 * 0) + (-1.27063966 * 0) = 0 + 0 = 0
                 print("---- Saída linear: ", saida_linear)
 
-                saida_prevista = funcao_heavside(saida_linear) # Aplica a função de ativação para obter a classe prevista
+                saida_prevista = funcao_heaviside(saida_linear) # Aplica a função de ativação para obter a classe prevista
                 print("---- Ativação: ", saida_prevista)
 
                 ajuste = self.taxa_aprendizado * (rotulos[indice] - saida_prevista)
@@ -50,8 +50,10 @@ class Perceptron:
                 print(f"---- Treinamento convergiu na época {epoca + 1}")
                 break
 
-    def prever(self):
-        print("Fazer previsões com base no treinamento")
+    def prever(self, entradas):
+        saida_linear = np.dot(entradas, self.pesos) + self.vies  # Calcular a saída linear usando os pesos atuais + viés. O dot do numpy realiza o cálculo de produto escalar.
+        saida_prevista = funcao_heaviside(saida_linear)  # Aplica a função de ativação para obter a classe prevista
+        return saida_prevista
 
 # [peso (kg), altura (m)]
 entradas = np.array([
@@ -73,3 +75,20 @@ entradas_normalizadas = (entradas - media) / desvio_padrao # normalizar os dados
 
 modelo = Perceptron()
 modelo.treinar(entradas_normalizadas, rotulos)
+
+# Entrada do novo dado
+print("\nDigite um novo dado para classificar:")
+peso_input = float(input("Peso (kg). Ex 75:"))
+altura_input = float(input("Altura (m). Ex 1.85:"))
+
+novo_dado = np.array([[peso_input, altura_input]])
+
+# Normalização
+novo_dado_normalizado = (novo_dado - media) / desvio_padrao # normalizar os dados (z-score)
+
+# Previsão
+previsao = modelo.prever(novo_dado_normalizado)[0]
+print("Previsão: ", previsao)
+
+classe_prevista = "Adulto" if previsao == 1 else "Criança"
+print("Resultado (predição): ", classe_prevista)
