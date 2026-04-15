@@ -22,6 +22,15 @@ class Perceptron:
 
         for epoca in range(self.epocas):
             print("Epoca: ", epoca)
+            for indice, entrada_individual in enumerate(entradas):
+                print("Indice: ", indice)
+                print("Entrada individual: ", entrada_individual)
+
+                # [-1.15686203 - 1.27063966]
+                # [-0.78666618 - 0.67269158]
+                # [0.69411722  0.8221786]
+                # [1.249411    1.12115264]
+
 
     def prever(self):
         print("Fazer previsões com base no treinamento")
