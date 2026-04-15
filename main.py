@@ -1,36 +1,54 @@
 import numpy as np
 
+def funcao_heavside(x):
+    return np.where(x >= 0, 1, 0)
+
 class Perceptron:
-    def __init__(self, taxa_aprendizado = 0.1, epocas = 1000):
+    def __init__(self, taxa_aprendizado = 0.1, epocas = 100):
         self.taxa_aprendizado = taxa_aprendizado
         self.epocas = epocas
 
     def treinar(self, entradas, rotulos):
-        print("Entradas: ", entradas)
-        print("Rotulos: ", rotulos)
-
-        num_amostras, num_features = entradas.shape # ele retorna uma tupla com as dimensões do array -> 4 linhas / 2 colunas
-
-        # Parâmetro para o modelo, logo pesos do modelo != da feature peso de cada tupla (dado de entrada)
-        # Iniciar os pesos com zero
+        num_amostras, num_features = entradas.shape
         self.pesos = np.zeros(num_features)
-
-        print("Pesos iniciais por feature para iniciar o treinamento do modelo: ", self.pesos)
-
         self.vies = 0 # Inicia o viés do modelo, ele funcionará como um ajuste fino
-        print("Viés: ", self.vies)
 
         for epoca in range(self.epocas):
-            print("Epoca: ", epoca)
+            erros = 0
+            print("Época: ", epoca)
             for indice, entrada_individual in enumerate(entradas):
-                print("Indice: ", indice)
-                print("Entrada individual: ", entrada_individual)
+                print("---- Índice: ", indice, "Entrada individual: ", entrada_individual)
+                print("---- Pesos: ", self.pesos)
+                print("---- Viés: ", self.vies)
+                saida_linear = np.dot(entrada_individual, self.pesos) + self.vies # Calcular a saída linear usando os pesos atuais + viés
+                # dot -> produto escalar
+                # (-1.15686203 * 0) + (-1.27063966 * 0) = 0 + 0 = 0
+                print("---- Saída linear: ", saida_linear)
 
-                # [-1.15686203 - 1.27063966]
-                # [-0.78666618 - 0.67269158]
-                # [0.69411722  0.8221786]
-                # [1.249411    1.12115264]
+                saida_prevista = funcao_heavside(saida_linear) # Aplica a função de ativação para obter a classe prevista
+                print("---- Ativação: ", saida_prevista)
 
+                ajuste = self.taxa_aprendizado * (rotulos[indice] - saida_prevista)
+                # 0.1 * (0 - 1) = -0,1
+                print("---- Ajuste: ", ajuste)
+
+                print("---- Erros (antes): ", erros)
+                if(ajuste != 0): # Conta quantas vezes o modelo errou (ou precisou corrigir) durante a época
+                    erros += 1
+                print("---- Erros (depois): ", erros)
+
+                print("---- Pesos (antes): ", self.pesos)
+                self.pesos += ajuste * entrada_individual # Ajusta os pesos com base no erro
+                #[0. 0.] + (-0.1 * [-1.15686203 -1.27063966]) = [0.1156862  0.12706397]
+                print("---- Pesos (depois): ", self.pesos)
+
+                print("---- Vies (antes): ", self.vies)
+                self.vies += ajuste
+                print("---- Vies (depois): ", self.vies)
+
+            if erros == 0: # Verifica se o treinamento convergiu. Significa que o modelo parou de errar nos dados do treino.
+                print(f"---- Treinamento convergiu na época {epoca + 1}")
+                break
 
     def prever(self):
         print("Fazer previsões com base no treinamento")
@@ -43,6 +61,7 @@ entradas = np.array([
     [80, 1.8], # adulto
 ])
 
+# 0 => criança, 1 => adulto
 rotulos = np.array([0, 0, 1, 1])
 
 media = entradas.mean(axis=0) # medindo a média por coluna (peso e altura)
