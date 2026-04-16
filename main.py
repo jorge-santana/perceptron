@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def funcao_heaviside(x):
     return np.where(x >= 0, 1, 0)
@@ -92,3 +93,78 @@ print("Previsão: ", previsao)
 
 classe_prevista = "Adulto" if previsao == 1 else "Criança"
 print("Resultado (predição): ", classe_prevista)
+
+## -----------------------
+
+# =========================
+# Visualização
+# =========================
+plt.figure()
+
+# Plot dos dados de treino com rótulos
+for i in range(len(entradas)):
+    peso, altura = entradas[i]
+    classe = "Adulto" if rotulos[i] == 1 else "Criança"
+    cor = "orange" if rotulos[i] == 1 else "blue"
+
+    plt.scatter(
+        entradas_normalizadas[i, 0],
+        entradas_normalizadas[i, 1],
+        color=cor,
+        s=100
+    )
+
+    plt.annotate(
+        f"{classe}\n({peso}kg, {altura}m)",
+        (entradas_normalizadas[i, 0], entradas_normalizadas[i, 1]),
+        textcoords="offset points",
+        xytext=(5, 5),
+        fontsize=9
+    )
+
+# =========================
+# Linha de decisão
+# =========================
+pesos = modelo.pesos
+vies = modelo.vies
+
+valores_x = np.linspace(
+    entradas_normalizadas[:, 0].min(),
+    entradas_normalizadas[:, 0].max(),
+    100
+)
+
+if pesos[1] != 0:
+    valores_y = -(pesos[0] * valores_x + vies) / pesos[1]
+    plt.plot(valores_x, valores_y, label="Linha de decisão")
+
+# =========================
+# Novo dado destacado
+# =========================
+plt.scatter(
+    novo_dado_normalizado[:, 0],
+    novo_dado_normalizado[:, 1],
+    marker="*",
+    s=250,
+    label="Novo dado"
+)
+
+plt.annotate(
+    f"{classe_prevista}\n({peso_input}kg, {altura_input}m)",
+    (novo_dado_normalizado[0, 0], novo_dado_normalizado[0, 1]),
+    textcoords="offset points",
+    xytext=(5, 5),
+    fontsize=10,
+    fontweight="bold"
+)
+
+# =========================
+# Ajustes finais
+# =========================
+plt.xlabel("Peso (normalizado)")
+plt.ylabel("Altura (normalizada)")
+plt.title("Perceptron - Classificação: Criança vs Adulto")
+plt.legend()
+plt.grid()
+
+plt.show()
